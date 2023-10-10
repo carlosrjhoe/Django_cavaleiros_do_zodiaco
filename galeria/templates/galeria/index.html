@@ -4,6 +4,7 @@
 {% block title %}Pagina principal{% endblock %}
 
 {% block content %}
+
             <section class="conteudo">
                 <section class="banner">
                     <img class="banner__imagem" src="{% static '/assets/imagens/Banner(2).png' %}" alt="banner Alura Space">
@@ -22,21 +23,27 @@
                     <div class="cards">
                         <h2 class="cards__titulo">Navegue pela galeria</h2>
                         <ul class="cards__lista">
-                            <li class="card">
-                                <a href="imagem">
-                                    <img class="card__imagem" src="{% static '/assets/imagens/galeria/carina-nebula.png' %}" alt="foto">
-                                </a>
-                                <span class="card__tag">Estrelas</span>
-                                <div class="card__info">
-                                    <p class="card__titulo">Nome da foto</p>
-                                    <div class="card__texto">
-                                        <p class="card__descricao">Fonte/fotógrafo/satélite</p>
-                                        <span>
-                                            <img src="{% static '/assets/ícones/1x/favorite_outline.png' %}" alt="ícone de coração">
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
+                            {% if cavaleiros %}
+                                {% for cavaleiro in cavaleiros %}
+                                    <li class="card">
+                                        </br>
+                                        <a href="{% url 'imagem'%}">
+                                            <img class="card__imagem" src="{% static 'assets/imagens/galeria/'%}{{ cavaleiro.imagem }}" alt="foto">
+                                        </a>
+                                        <span class="card__tag">{{ cavaleiro.constelacao }}</span>
+                                        <div class="card__info">
+                                            <p class="card__titulo">{{ cavaleiro.nome }}</p>
+                                            <div class="card__texto">
+                                                <p class="card__descricao">{{ cavaleiro.historia }}</p>
+                                                </br>
+                                                <span>
+                                                    <img src="{% static '/assets/ícones/1x/favorite_outline.png' %}" alt="ícone de coração">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
                         </ul>
                     </div>
                 </section>
