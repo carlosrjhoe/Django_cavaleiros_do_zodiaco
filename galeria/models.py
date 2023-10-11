@@ -9,5 +9,3 @@ class Cavaleiro(models.Model):
 
     def __str__(self) -> str:
         return f'{self.nome} - {self.constelacao}'
-
-    objects = models.Manager()
