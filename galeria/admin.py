@@ -4,8 +4,9 @@ from .models import Cavaleiro
 # Register your models here.
 class ListaCavaleiros(admin.ModelAdmin):
     ordering = ('id',)
-    list_display = ('id', 'nome', 'constelacao')
+    list_display = ('id', 'nome', 'armadura', 'constelacao')
     list_display_links = ('id', 'nome')
     search_fields = ('nome', )
+    list_filter = ('armadura',)
 
 admin.site.register(Cavaleiro, ListaCavaleiros)
