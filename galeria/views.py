@@ -15,3 +15,6 @@ def imagem(request, foto_id):
         'cavaleiro': cavaleiro
     }
     return render(request, 'galeria/imagem.html', context)
+
+def buscar(request):
+    return render(request, 'galeria/buscar.html')
