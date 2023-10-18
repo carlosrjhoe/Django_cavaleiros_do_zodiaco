@@ -1,1 +1,41 @@
 {% extends "base.html" %}
+{% load static %}
+
+<title>{% block title %}Busca por Cavaleiros{% endblock  %}</title>
+
+{% block content %}
+                <section class="galeria">
+                    <div class="cards">
+                        <h2 class="cards__titulo">Navegue pela galeria</h2>
+                        <ul class="cards__lista">
+                            {% if cavaleiros %}
+                                {% for cavaleiro in cavaleiros %}
+                                    <li class="card">
+                                        <a href="{% url 'imagem' cavaleiro.id %}">
+                                            <img class="card__imagem" src="{{cavaleiro.imagem.url}}" alt="{{cavaleiro.nome}}">
+                                        </a>
+                                        <span class="card__tag">{{ cavaleiro.constelacao }}</span>
+                                        <div class="card__info">
+                                            <p class="card__titulo">{{ cavaleiro.nome }}</p>
+                                            <div class="card__texto">
+                                                <p class="card__descricao">{{ cavaleiro.historia }}</p>
+                                                </br>
+                                                <span>
+                                                    <img src="{% static '/assets/ícones/1x/favorite_outline.png' %}" alt="ícone de coração">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <div class="imagem__texto">
+                                    <p>Foto do cavaleiro não foi encontrada</p>
+                                </div>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+{% endblock content %}

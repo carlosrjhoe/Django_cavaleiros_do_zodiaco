@@ -17,4 +17,13 @@ def imagem(request, foto_id):
     return render(request, 'galeria/imagem.html', context)
 
 def buscar(request):
-    return render(request, 'galeria/buscar.html')
+    cavaleiro = Cavaleiro.objects.order_by('-nome')
+
+    if 'buscar' in request.GET:
+        nome_a_buscar = request.GET['buscar']
+        if nome_a_buscar:
+            cavaleiro = Cavaleiro.objects.filter(nome__icontains=nome_a_buscar)
+        context = {
+            'cavaleiros': cavaleiro
+        }
+    return render(request, 'galeria/buscar.html', context)
