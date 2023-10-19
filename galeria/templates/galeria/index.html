@@ -27,7 +27,7 @@
                                 {% for cavaleiro in cavaleiros %}
                                     <li class="card">
                                         </br>
-                                        <a href="{% url 'imagem' cavaleiro.id %}">
+                                        <a href="{% url 'galeria:imagem' cavaleiro.id %}">
                                             <img class="card__imagem" src="{{cavaleiro.imagem.url}}" alt="{{cavaleiro.nome}}">
                                         </a>
                                         <span class="card__tag">{{ cavaleiro.constelacao }}</span>
