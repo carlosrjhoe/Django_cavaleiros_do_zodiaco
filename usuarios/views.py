@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from usuarios.forms import LoginForms
+from usuarios.forms import LoginForms, CadastroForms
 
 # Create your views here.
 def login(request):
@@ -12,4 +12,8 @@ def login(request):
 
 def cadastro(request):
     template_name = 'usuarios/cadastro.html'
-    return render(request, template_name)
+    form = CadastroForms()
+    context = {
+        'form': form,
+    }
+    return render(request, template_name, context)
