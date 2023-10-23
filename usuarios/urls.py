@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import LoginTemplateView, CadastroTemplateView
+from . import views
 
 app_name = 'usuarios'
 
 urlpatterns = [
-    path('login/', LoginTemplateView.as_view(), name='login'),
-    path('cadastro/', CadastroTemplateView.as_view(), name='cadastro'),
+    path('login/', views.login, name='login'),
+    path('cadastro/', views.cadastro, name='cadastro'),
 ]
