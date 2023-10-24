@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from usuarios.forms import LoginForms, CadastroForms
 
 # Create your views here.
@@ -13,6 +13,12 @@ def login(request):
 def cadastro(request):
     template_name = 'usuarios/cadastro.html'
     form = CadastroForms()
+
+    if request == 'POST':
+        form = CadastroForms(request.POST)
+        if form['primeira_senha'].value() != form['segunda_senha'].value():
+            return redirect(template_name)
+        
     context = {
         'form': form,
     }
