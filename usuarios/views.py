@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from usuarios.forms import LoginForms, CadastroForms
+from django.contrib.auth.models import User
 
 # Create your views here.
 def login(request):
@@ -14,10 +15,27 @@ def cadastro(request):
     template_name = 'usuarios/cadastro.html'
     form = CadastroForms()
 
-    if request == 'POST':
+    if request.method == 'POST':
         form = CadastroForms(request.POST)
-        if form['primeira_senha'].value() != form['segunda_senha'].value():
-            return redirect(template_name)
+        
+        if form.is_valid():
+            if form['primeira_senha'].value() != form['segunda_senha'].value():
+                return redirect(template_name)
+
+            nome_casdatro = form['nome_casdatro'].value()
+            email = form['email'].value()
+            senha = form['primeira_senha'].value()
+
+            if User.objects.filter(username=nome_casdatro).exists():
+                return redirect(template_name)
+
+            usuario = User.objects.create_user(
+                username = nome_casdatro,
+                email = email,
+                password = senha
+            )
+
+            usuario.save()
         
     context = {
         'form': form,
