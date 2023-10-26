@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from usuarios.forms import LoginForms, CadastroForms
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.contrib import messages
 
 # Create your views here.
 def login(request):
@@ -21,10 +22,12 @@ def login(request):
 
             if usuario is not None:
                 auth.login(request, usuario)
+                messages.success(request, f'Usuário {nome} logado com sucesso')
                 return redirect('galeria:index')
                 
             else:
-                return redirect(template_name)
+                messages.error(request, f'Erro ao efetua login.')
+                return redirect('galeria:index')
     
     context = {
         'form': form,
@@ -40,6 +43,7 @@ def cadastro(request):
         
         if form.is_valid():
             if form['primeira_senha'].value() != form['segunda_senha'].value():
+                messages.error(request, 'Senhas não são iguais')
                 return redirect(template_name)
 
             nome_casdatro = form['nome_casdatro'].value()
@@ -47,6 +51,7 @@ def cadastro(request):
             senha = form['primeira_senha'].value()
 
             if User.objects.filter(username=nome_casdatro).exists():
+                messages.error(request, 'Usuário já existente.')
                 return redirect(template_name)
 
             usuario = User.objects.create_user(
@@ -55,6 +60,7 @@ def cadastro(request):
                 password = senha,
             )
             usuario.save()
+            messages.success(request, 'Cadastro efetuado com sucesso.')
             return redirect('usuarios:login')
             
     context = {
