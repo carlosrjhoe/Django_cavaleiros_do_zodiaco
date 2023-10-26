@@ -1,11 +1,31 @@
 from django.shortcuts import redirect, render
 from usuarios.forms import LoginForms, CadastroForms
 from django.contrib.auth.models import User
+from django.contrib import auth
 
 # Create your views here.
 def login(request):
     template_name = 'usuarios/login.html'
     form = LoginForms()
+
+    if request.method == 'POST':
+        form = LoginForms(request.POST)
+        if form.is_valid():
+            nome = form['nome_login'].value()
+            senha = form['senha'].value()
+
+            usuario = auth.authenticate(
+                username = nome,
+                password = senha
+            )
+
+            if usuario is not None:
+                auth.login(request, usuario)
+                return redirect('galeria:index')
+                
+            else:
+                return redirect(template_name)
+    
     context = {
         'form': form,
     }
@@ -32,11 +52,11 @@ def cadastro(request):
             usuario = User.objects.create_user(
                 username = nome_casdatro,
                 email = email,
-                password = senha
+                password = senha,
             )
-
             usuario.save()
-        
+            return redirect('usuarios:login')
+            
     context = {
         'form': form,
     }
