@@ -7,6 +7,6 @@ class ListaCavaleiros(admin.ModelAdmin):
     list_display = ('id', 'nome', 'armadura', 'constelacao')
     list_display_links = ('id', 'nome')
     search_fields = ('nome', )
-    list_filter = ('armadura',)
+    list_filter = ('armadura', 'usuario')
 
 admin.site.register(Cavaleiro, ListaCavaleiros)
