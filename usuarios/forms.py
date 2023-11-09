@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 
 class LoginForms(forms.Form):
@@ -16,7 +17,7 @@ class LoginForms(forms.Form):
     ))
 
 class CadastroForms(forms.Form):
-    nome_casdatro = forms.CharField(label='Nome de cadastro', required=True, max_length=100, widget=forms.TextInput(
+    nome_cadastro = forms.CharField(label='Nome de cadastro', required=True, max_length=100, widget=forms.TextInput(
         attrs = {
             'class': 'form-control',
             'placeholder': 'Ex.: João Silva',
@@ -43,3 +44,21 @@ class CadastroForms(forms.Form):
             'placeholder': 'Digite sua senha novamente',
         }
     ))
+
+    def clean_nome_cadastro(self):
+        nome = self.cleaned_data.get('nome_cadastro')
+        if nome:
+            nome = nome.strip()
+            if ' ' in nome:
+                raise forms.ValidationError('Não é possível incerir espaços dentro do compo (nome cadastro).')
+            else:
+                return nome
+
+    def clean_segunda_senha(self):
+        primeira_senha = self.cleaned_data.get('primeira_senha')
+        segunda_senha = self.cleaned_data.get('segunda_senha')
+        if primeira_senha and segunda_senha:
+            if primeira_senha != segunda_senha:
+                raise forms.ValidationError('As senhas não são iguais.')
+            else:
+                return segunda_senha
