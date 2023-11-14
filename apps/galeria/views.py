@@ -34,3 +34,12 @@ def buscar(request):
             'cavaleiros': cavaleiro
         }
     return render(request, 'galeria/buscar.html', context)
+
+def nova_imagem(request):
+    return render(request, 'galeria/nova_imagem.html')
+
+def editar_imagem(request):
+    pass
+
+def deletar_imagem(request):
+    pass
