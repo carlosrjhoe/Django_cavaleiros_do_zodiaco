@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Cavaleiro
+from apps.galeria.models import Cavaleiro
 from django.contrib import messages
 
 # Create your views here.
 def index(request):
     if not request.user.is_authenticated:
         messages.error(request,'Usuário não logado!')
-        return redirect('usuarios:login')
+        return redirect('apps.usuarios:login')
     cavaleiro = Cavaleiro.objects.all()
     context = {
         'cavaleiros': cavaleiro
@@ -23,7 +23,7 @@ def imagem(request, foto_id):
 def buscar(request):
     if not request.user.is_authenticated:
         messages.error(request,'Usuário não logado!')
-        return redirect('usuarios:login')
+        return redirect('apps.usuarios:login')
     cavaleiro = Cavaleiro.objects.order_by('-nome')
 
     if 'buscar' in request.GET:

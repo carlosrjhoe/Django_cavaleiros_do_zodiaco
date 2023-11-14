@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from usuarios.forms import LoginForms, CadastroForms
+from apps.usuarios.forms import LoginForms, CadastroForms
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib import messages
@@ -23,11 +23,11 @@ def login(request):
             if usuario is not None:
                 auth.login(request, usuario)
                 messages.success(request, f'Usuário {nome} logado com sucesso')
-                return redirect('galeria:index')
+                return redirect('apps.galeria:index')
                 
             else:
                 messages.error(request, f'Erro ao efetua login.')
-                return redirect('galeria:index')
+                return redirect('apps.galeria:index')
     
     context = {
         'form': form,
@@ -57,7 +57,7 @@ def cadastro(request):
             )
             usuario.save()
             messages.success(request, 'Cadastro efetuado com sucesso.')
-            return redirect('usuarios:login')
+            return redirect('apps.usuarios:login')
             
     context = {
         'form': form,
@@ -67,4 +67,4 @@ def cadastro(request):
 def logout(request):
     auth.logout(request)
     messages.success(request, 'Logout do usuário efetuado com sucesso.')
-    return redirect('usuarios:login')
+    return redirect('apps.usuarios:login')
