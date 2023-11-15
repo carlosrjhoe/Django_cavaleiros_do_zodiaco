@@ -53,8 +53,18 @@ def nova_imagem(request):
     }
     return render(request, 'galeria/nova_imagem.html', context)
 
-def editar_imagem(request):
-    pass
+def editar_imagem(request, foto_id):
+    fotografia = Cavaleiro.objects.get(id=foto_id)
+    form = FotografiaForms(instance=fotografia)
+    if request.method == 'POST':
+        form = FotografiaForms(request.POST, request.FILES, instance=fotografia)
+        messages.success(request, 'Fotografia editada.')
+        return redirect('apps.galeria:index')
+    context = {
+        'form': form,
+        'foto_id': foto_id,
+    }
+    return render(request, 'galeria/editar_imagem.html', context)
 
 def deletar_imagem(request):
     pass
