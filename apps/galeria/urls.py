@@ -10,4 +10,5 @@ urlpatterns = [
     path('nova_imagem', views.nova_imagem, name='nova_imagem'),
     path('editar_imagem/<int:foto_id>', views.editar_imagem, name='editar_imagem'),
     path('deletar_imagem/<int:foto_id>', views.deletar_imagem, name='deletar_imagem'),
+    path('filtro_imagem/<str:armadura>', views.filtro_imagem, name='filtro_imagem'),
 ]

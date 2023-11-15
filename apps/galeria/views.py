@@ -71,3 +71,10 @@ def deletar_imagem(request, foto_id):
     fotografia.delete()
     messages.success(request, 'Fotografia deletada.')
     return redirect('apps.galeria:index')
+
+def filtro_imagem(request, armadura):
+    cavaleiros = Cavaleiro.objects.order_by('armadura').filter(armadura=armadura)
+    context = {
+        'cavaleiros': cavaleiros
+    }
+    return render(request, 'galeria/index.html', context)
